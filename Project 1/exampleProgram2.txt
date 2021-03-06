@@ -1,0 +1,99 @@
+start:
+   //methods
+   method bool fightMonster() {
+     out("Type 1 or 2: ");
+     int b;
+     in(b);
+     if ( b == 1 ) {
+       strength -= 300;
+       out("You are dead. Game over!");
+       return false;
+     }
+     else {
+       out("You have beaten the monster. Good job!");
+       strength -= 30;
+       return true;  
+     }
+   }
+
+   int strength = 100;
+   double wealth = 200.0;
+   char item[5];
+
+   int chapterNumber = 1;
+   
+   Map map = createMap(15);
+   connectChapters(1,2,South);
+   connectChapters(1,3,North);
+   connectChapters(2,5, North);
+   connectChapters(5,11,East);
+   connectChapters(6,13, West);
+
+   addItem("Monster", 1);
+   addItem("Monster", 2);
+   addItem("Monster", 3);
+   addItem("Monster", 5);
+   addItem("Monster", 6);
+   addItem("Monster", 11); 
+   addItem("Monster", 13);
+
+/!If the chapter number is even, a tool appers after the monster is killed.
+  There are two types of tools: a and b. If the chapter number is odd, food appears.
+  There is only one type of food: c.
+  !/
+   addItem('a', 2);       
+   addItem('b', 6);
+   addItem('c', 1);
+   addItem('c', 3);
+   addItem('c', 5);
+   addItem('c', 11);
+   addItem('c', 13);
+
+   out("If you want to exit game, press 0.");
+   int a;
+   in(a);
+   bool check = (a == 0);
+   
+   while ( check != true ) {
+     out("You are in chapter ", chapterNumber);
+     bool isDead = fightMonster();
+     if ( isDead == false ) {
+        break;
+     }
+     if ( chapterNumber % 2 == 1 ) {
+        out("You have earned food");
+	wealth -= 20;
+        strength += 40;
+     }
+     else {
+        if ( chapterNumber % 2 == 0 ) {
+	   out("You have earned tool");
+	   wealth = wealth + 30;
+        }
+     }
+     if ( [ chapterNumber ** chapterNumber < 3 ] {
+       out("You have only two ways: West and East. Which one do you choose? ");
+       Direction direct;
+       in(direct);
+       if ( (direct == West | direct == East) & isAvailable(direct) ) {
+	  Time t;
+	  out("Your time to pass the chapter is started. Hurry up!");
+	  if ( getTime(t) > 01:00:00 ) {
+	    out("You are late. Goodbye, game is over.");
+	    break;
+	  }
+	  else {
+	    chapterNumber = move(direct, chapterNumber);
+	    out("You have passed to chapter ", chapterNumber);
+          }   
+       }
+       else {
+	 out("Game is over. There is no way.");
+	 break;
+       } 
+    }
+    out("If you want to exit game, press 0.");
+    in(a);
+    check = (a == 0);
+   }
+end

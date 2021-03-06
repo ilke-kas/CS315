@@ -1,0 +1,117 @@
+/!An adventure game where the goal is to escape from the monsters, 
+  finding treasures, eating food to protect the character's strength.
+  !/
+start:
+  //Methods
+  method none fightMonster() {
+    out("You have beaten the monster but lost 50 strength");
+    strength -= 50; 
+  }
+  method none eat() {
+      out("You have eaten food.");
+      strength = strength + 25;
+  }
+  method none buyItem() {
+    out("Do you want to buy food or tool? Enter zero for food, nonzero for tool: ");
+    int c;
+    in(c);
+    if ( c == 0 ) {
+      out("You bought food. Do you want to eat right now? If yes, press 'x':" );
+      wealth = wealth - 20;
+      char d;
+      in(d);
+      if ( d == 'x' ) {
+	eat();
+      }
+    }
+    else {
+      out("Do you prefer sword or gun? Enter zero for sword, nonzero for gun: ");
+      in(c);
+      if ( c == 0 ) {
+	 tool[currentIndex] = "Sword";
+	 wealth = wealth - 40;
+	 currentIndex++;
+      }
+      else {
+	 tool[currentIndex] = "Gun";
+	 wealth = wealth - 60;
+	 currentIndex++;
+      }
+    }
+  }
+  
+  int strength = 100;
+  double wealth = 200.0;
+  string tool[10];
+  int currentIndex = 0;
+
+  int chapterNumber = 1;    //The chapter that the user is present at
+
+  Map map = createMap(5);
+
+  connectChapters(1, 2,South );
+  connectChapters(2, 4, North);
+  connectChapters(1, 3, East);
+  connectChapters(2, 3, South);
+  connectChapters(4, 5, North);
+  
+  addItem("Monster", 2);	//Adds a monster to the room.
+  addItem("Sword", 1);
+  addItem("Bread", 3);
+  addItem("Gun", 4);
+  addItem("Monster", 4);
+  addItem("Monster", 5);
+  Time t;	
+  out("Press 1 if you want to continue to the game. Press 0 if you do not want to continue
+       to the game.");
+  int d;
+  in(d);
+  int i = 0;
+  int j = 0;
+  while ( strength >= 0 & d == 1 & [getTime(t) < 00:01:00]) ) {
+    out("Your strength: ", strength, "Your wealth: ", wealth);
+    out("The room content: ");
+    string content[10] = getContent(chapterNumber);
+    while ( content[i] != none ) {
+       out(content[i]);
+       i++;
+    }
+    out("Which direction do you want to move: North/South/East/West");
+    Direction movement;
+    in(movement);
+    if ( (movement == North | movement == South | movement == East | movement == West) && isAvailable(movement) ) {
+      chapterNumber = move(movement);
+      out("You have passed to the ", chapterNumber, " chapter");
+	content = getContent(chapterNumber);
+    }
+    else {
+      out("You can't move");
+    }
+    
+    if ( content[0] != none ) {
+      tool[currentIndex] = content[0];
+      wealth = wealth + 50;
+      currentIndex++;
+    }
+    
+    while ( content[j] != none ) {
+      if ( content[j] == "Monster" ) {
+	 fightMonster();
+	 break;
+      }
+      j++;
+    }
+    eat();
+    out("What do you want to use?");
+    string tools;
+    in(tools);
+    useTool(tools); 
+    buyItem();
+	
+  out("Press 1 if you want to continue to the game. Press 0 if you do not want to continue
+       to the game.");
+  in(d);
+
+  }
+  out("The final score: ", ((2 * wealth) + (3 * strength)));
+end
