@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+</head>
+<body>
+<script>
+x = false;
+y = 0;
+function fun1()
+{
+	document.write("function 1 is evaluated<br\>");
+    return true;
+}
+function fun2()
+{
+	document.write("function 2 is evaluated<br\>");
+    return true;
+}
+function fun3()
+{
+	document.write("function 3 is evaluated<br\>");
+    return true;
+}
+function fun4()
+{
+	document.write("function 4 is evaluated<br\>");
+    return false;
+}
+function fun5()
+{
+	document.write("function 5 is evaluated<br\>");
+    return false;
+}
+function fun6()
+{
+	document.write("function 6 is evaluated<br\>");
+    return false;
+}
+function fun7(){
+   x = true;
+   document.write("function 7 is evaluated <br\>");
+   return true;
+}
+function fun8()
+{
+	document.write("function 8 is evaluated<br\>");
+    return 10;
+}
+function fun9()
+{
+	document.write("function 9 is evaluated<br\>");
+    return 3.2;
+}
+function fun10()
+{
+	document.write("function 10 is evaluated<br\>");
+    return undefined;
+}
+function fun11()
+{
+	document.write("function 11 is evaluated<br\>");
+  	y++;
+    return 1;
+}
+
+
+function main()
+{
+	document.write("------------1. Boolean operators----------<br\>");
+	document.write("All combination of &&(AND) operator<br\>");
+    document.write("false && false: ", false &&false, "<br\>");
+    document.write("false && true: ", false &&true, "<br\>");
+    document.write("true && false: ", true &&false, "<br\>");
+    document.write("true && true: ", true && true, "<br\><br\>");
+    
+    document.write("All combination of ||(OR) operator<br\>");
+    document.write("false || false: ", false ||false, "<br\>");
+    document.write("false || true: ", false ||true, "<br\>");
+    document.write("true || false: ", true ||false, "<br\>");
+    document.write("true || true: ", true || true, "<br\><br\>");
+    
+    document.write("All combination of !(NOT) operator<br\>");
+    document.write("false: ", false, "<br\>");
+    document.write("!false: ", !false, "<br\>");
+    document.write("true: ", true, "<br\>");
+    document.write("!true: ", !true, "<br\>");
+    document.write("------------2. Boolean data types----------<br\>");
+    var true_list= [10, 3.7, -89,"Ilke",8 + 22, 3 < 9, "false"];
+    for(var i = 0, size = true_list.length; i <size; i++)
+    {
+      if(true_list[i]){
+      	document.write(true_list[i], " is true <br\>");
+      }
+    }
+    document.write("<br\>");
+    var false_list = [0, 0.0, -0, 0n, "",null,NaN, 39 <1, false,undefined];
+    for(var i = 0, size = false_list.length; i <size; i++)
+    {
+      if(false_list[i]){
+      	document.write(false_list[i], " is true <br\>");
+      }
+      else
+      {
+      document.write(false_list[i], " is false <br\>");
+      }
+    }
+        document.write("------------3. Operator Precedence----------<br\>");
+       document.write("!false && false: ",!false && false, "<br\>");
+       document.write("!true || true: ",!true || true,"<br\>");
+       document.write("true || true && false: ", true || true && false, "<br\>");
+       document.write("------------4. Operatorassociativity rules ----------<br\>");
+       document.write("fun2() && fun1() && fun3(): ",fun2() && fun1() && fun3(), "<br\>");
+       document.write("fun5() || fun6() || fun4(): ",fun5() || fun6() || fun4(), "<br\>");
+       document.write("!!!fun4():",!!!fun4(),"<br\>");
+       document.write("------------5. Operand evaluation order ----------<br\>");
+       //code segment 1
+	if(x && fun7())
+	{
+		document.write("side effect of fun7-1<br\>");
+	}
+	x= false;
+	if(fun7() && x)
+	{
+		document.write("side effect of fun7-2<br\>");
+	}
+	//code segment2
+	document.write("code segment2<br\>");
+	document.write("true && true || false && false: ",true && true || false && false,"<br\>");
+	document.write("true && (true || false) && false: ",true && (true || false) && false,"<br\>");
+	//code segment3
+	document.write("code segment3<br\>");
+	if(fun8() && fun9())
+	{
+		document.write(fun8(),"&&",fun9(),": ", fun8() && fun9(),"<br\>");
+	}
+	if(fun9() && fun8())
+	{
+		document.write(fun9(),"&&",fun8(),": ", fun9() && fun8(),"<br\>");
+	}
+	if(!(fun5() || fun10()))
+	{
+		document.write(fun5(),"||",fun10(),": ", fun5() || fun10(),"<br\>");
+	}
+	if(!(fun10() || fun5()))
+	{
+		document.write(fun10(),"||",fun5(),": ", fun10() || fun5(),"<br\>");
+	}
+	document.write("------------6.Short circuit evaluation ----------<br\>");
+	if(y&&fun11())
+	{
+		document.write("side effect of fun7-1<br\>");
+	}
+	document.write("1-global y: ", y,"<br\>");
+	y = 0;
+	if(fun11()&&y)
+	{
+		document.write("side effect of fun7-2<br\>");	
+	}
+	document.write("2-global y: ", y,"<br\>");
+}
+main();
+</script>
+</body>
+</html>
+
+
